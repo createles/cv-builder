@@ -3,6 +3,9 @@ import './App.css'
 import InputWrapper from './components/input-forms/InputWrapper'
 import PrintPreview from './components/print-view/PrintPreview'
 import PersonalInfoForm from './components/input-forms/PersonalInfoForm'
+import ExperienceForm from './components/input-forms/ExperienceForm'
+import EducationForm from './components/input-forms/EducationForm'
+import SkillsForm from './components/input-forms/SkillForm'
 
 function App() {
   const [personalInfo, setPersonalInfo] = useState({
@@ -24,8 +27,9 @@ function App() {
     <div className="app-body">
       <div className="input-forms">
         <PersonalInfoForm personalInfo={personalInfo} onChange={handlePersonalInfoChange}></PersonalInfoForm>
-        <InputWrapper title="Experience" wrapId="expi"></InputWrapper>
-        <InputWrapper title="Education" wrapId="educ"></InputWrapper>
+        <ExperienceForm></ExperienceForm>
+        <EducationForm></EducationForm>
+        <SkillsForm></SkillsForm>
       </div>
       <PrintPreview
         fullName={personalInfo.fullName}
