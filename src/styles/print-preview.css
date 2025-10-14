@@ -1,0 +1,6 @@
+.print-preview {
+  background-color: #fff;
+  height: 90%;  
+  place-self: center;
+  aspect-ratio: 1 / 1.414;
+}
