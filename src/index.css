@@ -3,9 +3,16 @@
   --dark-bg: #121212;
 }
 
-body {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
   background-color: var(--dark-bg);
+}
+
+.contact-info {
+
 }
