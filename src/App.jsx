@@ -15,6 +15,7 @@ function App() {
     email: "",
     contactNumber: "",
     location: "",
+    link: "",
   });
 
   const handlePersonalInfoChange = (event) => {
@@ -69,6 +70,7 @@ function App() {
         email={personalInfo.email}
         contactNumber={personalInfo.contactNumber}
         location={personalInfo.location}
+        link={personalInfo.link}
       ></PrintPreview>
     </div>
   );

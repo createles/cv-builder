@@ -3,6 +3,8 @@
   height: 90%;  
   place-self: center;
   aspect-ratio: 1 / 1.414;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
 }
 
 .fullName {
