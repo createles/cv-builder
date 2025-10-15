@@ -26,15 +26,12 @@ function App() {
     }));
   };
 
-  const [expEdit, setExpEdit] = useState(false);
-
-  const handleExpEditChange = () => {
-    setExpEdit(!expEdit);
-  }
-
+  // master list for experiences
   const [experienceList, setExperienceList] = useState([]);
 
-  const [experienceData, setExperienceData] = useState([{
+  const [expInput, setExpInput] = useState(false); // state for opening experience form
+
+  const [currentExp, setCurrentExp] = useState([{
     id: crypto.randomUUID(),
     companyName: "",
     position: "", 
@@ -44,6 +41,26 @@ function App() {
     description: "",
   }]);
 
+  const handleAddClick = () => { // click handler for opening form
+    setExpInput(!expInput);
+    setCurrentExp({
+      companyName: "",
+      position: "",
+      startDate: "",
+      endDate: "",
+      location: "",
+      description: "",
+    })
+  }
+
+  const handleExpFormChange = (event) => {
+    const { name, value } = event.target;
+    setCurrentExperience((prevExp) => ({
+      ...prevExp,
+      [name]: value,
+    }));
+  };
+
   const handleExperienceListChange = (event) => {
     const { name, value } = event.target;
     setExperienceList((prevExp) => ({
@@ -51,8 +68,6 @@ function App() {
       [name]: value,
     }));
   };
-
-  const [expInputs, setExpInputs] = useState(false);
 
   const sampleList = [{
     id: 9393123,
@@ -76,8 +91,8 @@ function App() {
     <div className="app-body">
       <div className="input-forms">
         <PersonalInfoForm personalInfo={personalInfo} onChange={handlePersonalInfoChange}></PersonalInfoForm>
-        <ExperienceForm expEdit={expEdit}>
-          <AddButton name="Add experience" onChange={handleExpEditChange}></AddButton>
+        <ExperienceForm expInput={expInput}>
+          <AddButton name="Add experience" onChange={handleAddClick}></AddButton>
         </ExperienceForm>
         <EducationForm></EducationForm>
         <SkillsForm></SkillsForm>
@@ -95,6 +110,6 @@ function App() {
   );
 }
 
-// CONTINUE: AddButton triggering setExpInputs
+// CONTINUE: allow forms to manipulate the visual state of the matching entries for experience
 
 export default App
