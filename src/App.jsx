@@ -54,6 +54,24 @@ function App() {
 
   const [expInputs, setExpInputs] = useState(false);
 
+  const sampleList = [{
+    id: 9393123,
+    companyName: "Wayne Enterprises",
+    position: "CEO", 
+    startData: "10/12/2020",
+    endDate: "10/13/2025",
+    location: "Gotham City",
+    description: "My Company",
+  },{
+    id: 42342423,
+    companyName: "Arkham Asylum",
+    position: "Patient", 
+    startData: "06/25/2005",
+    endDate: "06/26/2006",
+    location: "Gotham",
+    description: "Patient",
+  }]
+
   return (
     <div className="app-body">
       <div className="input-forms">
@@ -71,6 +89,7 @@ function App() {
         contactNumber={personalInfo.contactNumber}
         location={personalInfo.location}
         link={personalInfo.link}
+        sampleList={sampleList}
       ></PrintPreview>
     </div>
   );
