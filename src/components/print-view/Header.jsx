@@ -1,9 +1,10 @@
 import {MdEmail, MdPhone, MdLocationOn} from "react-icons/md";
 
-function Header({fullName, email, contactNumber, location}) {
+function Header({fullName, title, email, contactNumber, location}) {
   return (
     <>
       <p className="fullName">{fullName}</p>
+      <p className="job-title">{title}</p>
       <p className="email">
         {email !== '' && <MdEmail id="email-icon"/>}
         {email}

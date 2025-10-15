@@ -1,6 +1,6 @@
-function AddButton({name}) {
+function AddButton({name, onChange}) {
   return (
-    <button className="addBtn">{name}</button>
+    <button className="addBtn" onClick={onChange}>{name}</button>
   )
 }
 

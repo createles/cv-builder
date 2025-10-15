@@ -4,3 +4,7 @@
   place-self: center;
   aspect-ratio: 1 / 1.414;
 }
+
+.fullName {
+  font-size: 2rem;
+}

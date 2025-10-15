@@ -1,16 +1,20 @@
 import InputWrapper from "./InputWrapper"
 import InputItem from "./InputItem"
 
-function ExperienceForm({experienceList, onChange}) {
+function ExperienceForm({expEdit, children}) {
   return (
     <InputWrapper title="Experience" wrapId="experience">
-      <InputItem label="Company Name" type="text" name="companyName" value={experienceList.companyName} onChange= ></InputItem>
-      <InputItem label= type="text" name="companyName" value= onChange= ></InputItem>
-      <InputItem label= type="text" name="position" value= onChange= ></InputItem>
-      <InputItem label= type="date" name= value= onChange= ></InputItem>
-      <InputItem label= type="date" name= value= onChange= ></InputItem>
-      <label className="item-label" htmlFor="description">Description</label>
-      <textarea className="description-text" value= ></textarea>
+      {expEdit && (
+      <>
+      <InputItem label="Company Name" type="text" name="companyName"></InputItem>
+      <InputItem label="Position" type="text" name="position"></InputItem>
+      <InputItem label="Start Date" type="date"></InputItem>
+      <InputItem label="End Date" type="date"></InputItem>
+      <InputItem label="Location" type="text"></InputItem>
+      <InputItem label="Description" type="textarea"></InputItem>
+      </>
+      )}
+      {children}
     </InputWrapper>
   )
 }

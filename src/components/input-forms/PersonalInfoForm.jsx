@@ -11,6 +11,13 @@ function PersonalInfoForm({personalInfo, onChange}) {
             value={personalInfo.fullName}
             onChange={onChange}
           ></InputItem>
+          <InputItem 
+            label="Professional title"
+            type="text"
+            name="title"
+            value={personalInfo.title}
+            onChange={onChange}
+          ></InputItem>
           <InputItem
             label="Email"
             type="email"

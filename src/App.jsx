@@ -11,6 +11,7 @@ import AddButton from './components/input-forms/AddButton'
 function App() {
   const [personalInfo, setPersonalInfo] = useState({
     fullName: "",
+    title: "",
     email: "",
     contactNumber: "",
     location: "",
@@ -23,6 +24,12 @@ function App() {
       [name]: value,
     }));
   };
+
+  const [expEdit, setExpEdit] = useState(false);
+
+  const handleExpEditChange = () => {
+    setExpEdit(!expEdit);
+  }
 
   const [experienceList, setExperienceList] = useState([]);
 
@@ -50,14 +57,15 @@ function App() {
     <div className="app-body">
       <div className="input-forms">
         <PersonalInfoForm personalInfo={personalInfo} onChange={handlePersonalInfoChange}></PersonalInfoForm>
-        <ExperienceForm experienceList={experienceList} onChange={handleExperienceListChange}>
-          <AddButton name="Add experience"></AddButton> 
+        <ExperienceForm expEdit={expEdit}>
+          <AddButton name="Add experience" onChange={handleExpEditChange}></AddButton>
         </ExperienceForm>
         <EducationForm></EducationForm>
         <SkillsForm></SkillsForm>
       </div>
       <PrintPreview
         fullName={personalInfo.fullName}
+        title={personalInfo.title}
         email={personalInfo.email}
         contactNumber={personalInfo.contactNumber}
         location={personalInfo.location}
