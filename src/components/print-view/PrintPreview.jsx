@@ -1,16 +1,25 @@
 import "../../styles/print-preview.css"
 import Header from "./Header";
-import ExperienceBlock from "./ExperienceSection";
+import ExperienceBlock from "./ExperienceBlock";
 
-function PrintPreview({fullName, title, email, contactNumber, location, link, sampleList}) {
+function PrintPreview({fullName, title, email, contactNumber, location, link, experienceList, currentExp}) {
+  let displayList = [...experienceList];
+
+  if (currentExp) {
+    displayList.push(currentExp);
+  }
+  
   return (
     <div className="print-preview">
       <Header fullName={fullName} title={title} email={email} contactNumber={contactNumber} location={location} link={link}></Header>
       <div className="experience-section">
         <h2>Experience</h2>
-        {sampleList.map(experienceEntry => (
-          <ExperienceBlock experienceEntry={experienceEntry}></ExperienceBlock>
-        ))}
+        {displayList.length > 0 ? displayList.map(experienceEntry => (
+          <ExperienceBlock 
+            key={experienceEntry.id}
+            experienceEntry={experienceEntry}/>
+        ))
+      : null }
       </div>
     </div>
   )

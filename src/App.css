@@ -3,3 +3,11 @@
   grid-template-columns: 1fr 2fr;
   gap: 1rem;
 }
+
+.btn-wrap.hidden {
+  display: none;
+}
+
+.add-btn.hidden {
+  display: none;
+}

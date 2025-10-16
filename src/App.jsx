@@ -29,33 +29,39 @@ function App() {
   // master list for experiences
   const [experienceList, setExperienceList] = useState([]);
 
-  const [expInput, setExpInput] = useState(false); // state for opening experience form
+  // temporary draft experience data
+  const [currentExp, setCurrentExp] = useState([]);
+  
+  // state for opening experience form
+  const [expInput, setExpInput] = useState(false);
 
-  const [currentExp, setCurrentExp] = useState([{
-    id: crypto.randomUUID(),
-    companyName: "",
-    position: "", 
-    startData: "",
-    endDate: "",
-    location: "",
-    description: "",
-  }]);
-
-  const handleAddClick = () => { // click handler for opening form
-    setExpInput(!expInput);
-    setCurrentExp({
+  // click handler for opening form
+  const handleAddClick = () => { 
+    setExpInput(!expInput); // show form
+    setCurrentExp({ // set temp data
+      id: crypto.randomUUID(),
       companyName: "",
       position: "",
       startDate: "",
       endDate: "",
-      location: "",
+      companyLocation: "",
       description: "",
     })
   }
 
+  const handleCancelClick = () => {
+    setExpInput(!expInput); // hide form
+    setCurrentExp(null); // clear temp data
+  }
+
+  const handleSaveClick = () => {
+    setExperienceList([...experienceList, currentExp]); // add temp data to saved list
+    setCurrentExp(null); // clear temp data
+  }
+
   const handleExpFormChange = (event) => {
     const { name, value } = event.target;
-    setCurrentExperience((prevExp) => ({
+    setCurrentExp((prevExp) => ({
       ...prevExp,
       [name]: value,
     }));
@@ -69,30 +75,16 @@ function App() {
     }));
   };
 
-  const sampleList = [{
-    id: 9393123,
-    companyName: "Wayne Enterprises",
-    position: "CEO", 
-    startData: "10/12/2020",
-    endDate: "10/13/2025",
-    location: "Gotham City",
-    description: "My Company",
-  },{
-    id: 42342423,
-    companyName: "Arkham Asylum",
-    position: "Patient", 
-    startData: "06/25/2005",
-    endDate: "06/26/2006",
-    location: "Gotham",
-    description: "Patient",
-  }]
-
   return (
     <div className="app-body">
       <div className="input-forms">
         <PersonalInfoForm personalInfo={personalInfo} onChange={handlePersonalInfoChange}></PersonalInfoForm>
-        <ExperienceForm expInput={expInput}>
-          <AddButton name="Add experience" onChange={handleAddClick}></AddButton>
+        <ExperienceForm expInput={expInput} onChange={handleExpFormChange}>
+          <AddButton name="Add experience" onChange={handleAddClick} input={expInput}></AddButton>
+          <div className={`btn-wrap ${!expInput ? 'hidden' : ''}`}>
+            <button className="cancel-btn" onClick={handleCancelClick}>Cancel</button>
+            <button className="save-btn">Save</button>
+          </div>
         </ExperienceForm>
         <EducationForm></EducationForm>
         <SkillsForm></SkillsForm>
@@ -104,12 +96,11 @@ function App() {
         contactNumber={personalInfo.contactNumber}
         location={personalInfo.location}
         link={personalInfo.link}
-        sampleList={sampleList}
+        experienceList={experienceList}
+        currentExp={currentExp}
       ></PrintPreview>
     </div>
   );
 }
-
-// CONTINUE: allow forms to manipulate the visual state of the matching entries for experience
 
 export default App
