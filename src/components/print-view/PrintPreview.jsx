@@ -3,10 +3,14 @@ import Header from "./Header";
 import ExperienceBlock from "./ExperienceBlock";
 
 function PrintPreview({fullName, title, email, contactNumber, location, link, experienceList, currentExp}) {
-  let displayList = [...experienceList];
+  let displayList = currentExp
+    ? experienceList.map(entry => entry.id === currentExp.id ? currentExp : entry)
+    : [...experienceList];
 
-  if (currentExp) {
-    displayList.push(currentExp);
+  const isAddingNew = currentExp && !experienceList.some(entry => entry.id === currentExp.id)
+
+  if (isAddingNew) {
+    displayList.push(currentExp)
   }
   
   return (

@@ -1,0 +1,7 @@
+.saved-entry {
+  display: flex;
+}
+
+.saved-entry p {
+  margin-right: auto;
+}

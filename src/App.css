@@ -11,3 +11,7 @@
 .add-btn.hidden {
   display: none;
 }
+
+.exp-entries.hidden {
+  display: none;  
+}
