@@ -1,11 +1,10 @@
 import InputWrapper from "./InputWrapper"
 import InputItem from "./InputItem"
-import AddButton from "./AddButton"
 
-function EducationForm() {
+function EducationForm({children}) {
   return (
     <InputWrapper title="Education" wrapId="education">
-      <AddButton name="Add education"></AddButton>
+      {children}
     </InputWrapper>
   )
 }

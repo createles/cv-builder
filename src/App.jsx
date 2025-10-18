@@ -37,7 +37,8 @@ function App() {
   const [expInput, setExpInput] = useState(false);
 
   // click handler for opening form
-  const handleAddClick = () => { 
+  const handleAddClick = (formCategory) => {
+    if (formCategory === "exp") {
     setExpInput(!expInput); // show form
     setCurrentExp({ // set temp data
       id: crypto.randomUUID(),
@@ -48,6 +49,7 @@ function App() {
       companyLocation: "",
       description: "",
     })
+    }
   }
 
   const handleCancelClick = () => {
@@ -92,7 +94,26 @@ function App() {
   const handleEntryDelete = (idToDelete) => {
     setExperienceList(prevList => prevList.filter(entry => entry.id !== idToDelete))
   }
+  
+  /* master list for education entries */
+  const [educList, setEducList] = useState([]);
 
+  /* temporary draft educ data */
+  const [currentEduc, setCurrentEduc] = useState(null);
+
+  /* state for opening education form */
+  const [educInput, setEducInput] = useState(false);
+
+
+  /* master list for education entries */
+  const [skillsList, setSkillsList] = useState([]);
+
+  /* temporary draft educ data */
+  const [currentSkills, setCurrentSkills] = useState(null);
+
+  /* state for opening education form */
+  const [skillsInput, setSkillsInput] = useState(false);
+  
   return (
     <div className="app-body">
       <div className="input-forms">
@@ -105,14 +126,18 @@ function App() {
           ))}
             </div>
           )}
-          <AddButton name="Add experience" onChange={handleAddClick} input={expInput}></AddButton>
+          <AddButton name="Add experience" onClick={() => handleAddClick("exp")} input={expInput}></AddButton>
           <div className={`btn-wrap ${!expInput ? 'hidden' : ''}`}>
             <button className="cancel-btn" onClick={handleCancelClick}>Cancel</button>
             <button className="save-btn" onClick={handleSaveClick}>Save</button>
           </div>
         </ExperienceForm>
-        <EducationForm></EducationForm>
-        <SkillsForm></SkillsForm>
+        <EducationForm>
+          <AddButton name="Add education" onClick={() => handleAddClick("educ")} input={educInput}></AddButton>
+        </EducationForm>
+        <SkillsForm>
+          <AddButton name="Add skills" onClick={() => handleAddClick("skills")} input={skillsInput}></AddButton>
+        </SkillsForm>
       </div>
       <PrintPreview
         fullName={personalInfo.fullName}
