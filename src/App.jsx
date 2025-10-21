@@ -19,124 +19,196 @@ function App() {
     link: "",
   });
 
-  const handlePersonalInfoChange = (event) => {
-    const { name, value } = event.target;
-    setPersonalInfo((prevInfo) => ({
-      ...prevInfo,
-      [name]: value,
-    }));
-  };
-
   // master list for experiences
   const [experienceList, setExperienceList] = useState([]);
+  const [currentExp, setCurrentExp] = useState(null);  // temporary draft experience data
+  const [expInput, setExpInput] = useState(false);   // state for opening experience form
 
-  // temporary draft experience data
-  const [currentExp, setCurrentExp] = useState(null);
-  
-  // state for opening experience form
-  const [expInput, setExpInput] = useState(false);
+    /* master list for education entries */
+  const [educList, setEducList] = useState([]);
+  const [currentEduc, setCurrentEduc] = useState(null);   /* temporary draft educ data */
+  const [educInput, setEducInput] = useState(false);   /* state for opening education form */
+
+  /* master list for education entries */
+  const [skillsList, setSkillsList] = useState([]);
+  const [currentSkills, setCurrentSkills] = useState(null);   /* temporary draft educ data */
+  const [skillsInput, setSkillsInput] = useState(false);   /* state for opening education form */
+
+  const formConfig = {
+    pInfo: {
+      list: personalInfo,
+      setList: setPersonalInfo,
+    },
+    exp: {
+      list: experienceList,
+      setList: setExperienceList,
+      currentItem: currentExp,
+      setCurrentItem: setCurrentExp,
+      setInput: setExpInput,
+      getNewItem: () => ({
+        id: crypto.randomUUID(),
+        companyName: "",
+        position: "",
+        startDate: "",
+        endDate: "",
+        companyLocation: "",
+        description: "",
+      }),
+    },
+    educ: {
+      list: educList,
+      setList: setEducList,
+      currentItem: currentEduc,
+      setCurrentItem: setCurrentEduc,
+      setInput: setEducInput,
+      getNewItem: () => ({
+        id: crypto.randomUUID(),
+        institution: "",
+        field: "",
+        startDate: "",
+        endDate: "",
+        courseWork: "",
+      })
+    },
+    skills: {
+      list: skillsList,
+      setList: setSkillsList,
+      currentItem: currentSkills,
+      setCurrentItem: setCurrentSkills,
+      setInput: setSkillsInput,
+    },
+  };
 
   // click handler for opening form
   const handleAddClick = (formCategory) => {
-    if (formCategory === "exp") {
-    setExpInput(!expInput); // show form
-    setCurrentExp({ // set temp data
-      id: crypto.randomUUID(),
-      companyName: "",
-      position: "",
-      startDate: "",
-      endDate: "",
-      companyLocation: "",
-      description: "",
-    })
-    }
-  }
+    const { setInput, setCurrentItem, getNewItem} =
+      formConfig[formCategory];
 
-  const handleCancelClick = () => {
-    setExpInput(!expInput); // hide form
-    setCurrentExp(null); // clear temp data
-  }
+    setInput((prevInput) => !prevInput); // show form        
+    setCurrentItem(getNewItem); // set form to blanks
+  };
 
-  const handleSaveClick = () => {
-    const editExisting = experienceList.some(entry => entry.id === currentExp.id);
+  const handleCancelClick = (formCategory) => {
+    const { setInput, setCurrentItem } =
+      formConfig[formCategory];
+
+    setInput((prevInput) => !prevInput)
+    setCurrentItem(null);
+  };
+
+  const handleSaveClick = (formCategory) => {
+    const { list, setList, currentItem, setCurrentItem, setInput } =
+      formConfig[formCategory];
+
+    const editExisting = list.some(
+      (entry) => entry.id === currentExp.id
+    );
 
     if (editExisting) {
-      setExperienceList(prevList => 
-        prevList.map(entry => entry.id === currentExp.id ? currentExp : entry))
+      setList((prevList) =>
+        prevList.map((entry) =>
+          entry.id === currentItem.id ? currentItem : entry
+        )
+      ); 
     } else {
-      setExperienceList(prevList => [...prevList, currentExp]); // add temp data to saved list
+      setList((prevList) => [...prevList, currentItem]); // add temp data to saved list
     }
+    
+    setCurrentItem(null); // clear temp data
+    setInput((prevInput) => !prevInput);
+  };
 
-    setCurrentExp(null); // clear temp data
-    setExpInput(!expInput);
-  }
-
-  // Change handler for experience form inputs
-  const handleExpFormChange = (event) => {
+  // Change handler for form inputs
+  const handleFormChange = (event, stateSetter) => {
     const { name, value } = event.target;
-    setCurrentExp((prevExp) => ({
-      ...prevExp,
+
+    stateSetter((prevData) => ({
+      ...prevData,
       [name]: value,
     }));
   };
 
+
   const handleEntryEdit = (idToEdit) => {
-    const entryToEdit = experienceList.find(entry => entry.id === idToEdit);
-    
+    const entryToEdit = experienceList.find((entry) => entry.id === idToEdit);
+
     console.log(entryToEdit);
 
     if (entryToEdit) {
       setCurrentExp(entryToEdit);
-      setExpInput(!expInput)
+      setExpInput(!expInput);
     }
-  }
+  };
 
   const handleEntryDelete = (idToDelete) => {
-    setExperienceList(prevList => prevList.filter(entry => entry.id !== idToDelete))
-  }
-  
-  /* master list for education entries */
-  const [educList, setEducList] = useState([]);
+    setExperienceList((prevList) =>
+      prevList.filter((entry) => entry.id !== idToDelete)
+    );
+  };
 
-  /* temporary draft educ data */
-  const [currentEduc, setCurrentEduc] = useState(null);
-
-  /* state for opening education form */
-  const [educInput, setEducInput] = useState(false);
-
-
-  /* master list for education entries */
-  const [skillsList, setSkillsList] = useState([]);
-
-  /* temporary draft educ data */
-  const [currentSkills, setCurrentSkills] = useState(null);
-
-  /* state for opening education form */
-  const [skillsInput, setSkillsInput] = useState(false);
-  
   return (
     <div className="app-body">
       <div className="input-forms">
-        <PersonalInfoForm personalInfo={personalInfo} onChange={handlePersonalInfoChange}></PersonalInfoForm>
-        <ExperienceForm formData={currentExp} expInput={expInput} onChange={handleExpFormChange}>
+        <PersonalInfoForm
+          personalInfo={personalInfo}
+          onChange={(event) => handleFormChange(event, setPersonalInfo)}
+        ></PersonalInfoForm>
+        <ExperienceForm
+          formData={currentExp}
+          expInput={expInput}
+          onChange={(event) => handleFormChange(event, setCurrentExp)}
+        >
           {experienceList.length > 0 && (
-            <div className={`exp-entries ${expInput ? 'hidden' : ''}`}>
-            {experienceList.map(entry => (
-            <SavedEntry key={entry.id} entry={entry} onEdit={handleEntryEdit} onDelete={handleEntryDelete}></SavedEntry>
-          ))}
+            <div className={`exp-entries ${expInput ? "hidden" : ""}`}>
+              {experienceList.map((entry) => (
+                <SavedEntry
+                  key={entry.id}
+                  entry={entry}
+                  onEdit={handleEntryEdit}
+                  onDelete={handleEntryDelete}
+                ></SavedEntry>
+              ))}
             </div>
           )}
-          <AddButton name="Add experience" onClick={() => handleAddClick("exp")} input={expInput}></AddButton>
-          <div className={`btn-wrap ${!expInput ? 'hidden' : ''}`}>
-            <button className="cancel-btn" onClick={handleCancelClick}>Cancel</button>
-            <button className="save-btn" onClick={handleSaveClick}>Save</button>
+          <AddButton
+            name="Add experience"
+            onClick={() => handleAddClick("exp")}
+            input={expInput}
+          ></AddButton>
+          <div className={`btn-wrap ${!expInput ? "hidden" : ""}`}>
+            <button className="cancel-btn" onClick={() => handleCancelClick("exp")}>
+              Cancel
+            </button>
+            <button className="save-btn" onClick={() => handleSaveClick("exp")}>
+              Save
+            </button>
           </div>
         </ExperienceForm>
-        <EducationForm>
-          <AddButton name="Add education" onClick={() => handleAddClick("educ")} input={educInput}></AddButton>
+        <EducationForm
+          formData={currentEduc}
+          educInput={educInput}
+          onChange={(event) => handleFormChange(event, setCurrentEduc)}
+        >
+          <AddButton
+            name="Add education"
+            onClick={() => handleAddClick("educ")}
+            input={educInput}
+          ></AddButton>
+          <div className={`btn-wrap ${!educInput ? "hidden" : ""}`}>
+            <button className="cancel-btn" onClick={() => handleCancelClick("educ")}>
+              Cancel
+            </button>
+            <button className="save-btn" onClick={() => handleSaveClick("educ")}>
+              Save
+            </button>
+          </div>
         </EducationForm>
         <SkillsForm>
-          <AddButton name="Add skills" onClick={() => handleAddClick("skills")} input={skillsInput}></AddButton>
+          <AddButton
+            name="Add skills"
+            onClick={() => handleAddClick("skills")}
+            input={skillsInput}
+          ></AddButton>
         </SkillsForm>
       </div>
       <PrintPreview
@@ -148,6 +220,10 @@ function App() {
         link={personalInfo.link}
         experienceList={experienceList}
         currentExp={currentExp}
+        educList={educList}
+        currentEduc={currentEduc}
+        skillsList={skillsList}
+        currentSkills={currentSkills}
       ></PrintPreview>
     </div>
   );

@@ -2,7 +2,7 @@ import "../../styles/print-preview.css"
 import Header from "./Header";
 import ExperienceBlock from "./ExperienceBlock";
 
-function PrintPreview({fullName, title, email, contactNumber, location, link, experienceList, currentExp}) {
+function PrintPreview({fullName, title, email, contactNumber, location, link, experienceList, currentExp, educList, currentEduc, skillsList, currentSkills}) {
   let displayList = currentExp
     ? experienceList.map(entry => entry.id === currentExp.id ? currentExp : entry)
     : [...experienceList];
@@ -24,6 +24,8 @@ function PrintPreview({fullName, title, email, contactNumber, location, link, ex
             experienceEntry={experienceEntry}/>
         ))
       : null }
+        <h2>Education</h2>
+        <h2>Skills</h2>
       </div>
     </div>
   )
