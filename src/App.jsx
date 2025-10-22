@@ -212,12 +212,7 @@ function App() {
         </SkillsForm>
       </div>
       <PrintPreview
-        fullName={personalInfo.fullName}
-        title={personalInfo.title}
-        email={personalInfo.email}
-        contactNumber={personalInfo.contactNumber}
-        location={personalInfo.location}
-        link={personalInfo.link}
+        personalInfo={personalInfo}
         experienceList={experienceList}
         currentExp={currentExp}
         educList={educList}
