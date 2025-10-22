@@ -32,7 +32,9 @@ const educationFields = [
 ];
 
 const skillsFields = [
-  { label: ""}
+  { label: "Discipline", type: "text", name: "discipline"},
+  { label: "Subdiscipline", type: "text", name: "subdiscipline"},
+  { label: "Description", type: "textarea", name: "description"},
 ]
 
 function App() {
@@ -57,8 +59,8 @@ function App() {
 
   /* master list for education entries */
   const [skillsList, setSkillsList] = useState([]);
-  const [currentSkills, setCurrentSkills] = useState(null);   /* temporary draft educ data */
-  const [skillsInput, setSkillsInput] = useState(false);   /* state for opening education form */
+  const [currentSkills, setCurrentSkills] = useState(null);   /* temporary draft skills data */
+  const [skillsInput, setSkillsInput] = useState(false);   /* state for opening skills form */
 
   const formConfig = useMemo(() => ({
     pInfo: {
@@ -102,6 +104,12 @@ function App() {
       currentItem: currentSkills,
       setCurrentItem: setCurrentSkills,
       setInput: setSkillsInput,
+      getNewItem: () => ({
+        id: crypto.randomUUID(),
+        discipline: "",
+        subdiscipline: "",
+        description: "",
+      })
     },
   }), [
     // dependency array
@@ -186,37 +194,22 @@ function App() {
           personalInfo={personalInfo}
           onChange={(event) => handleFormChange(event, setPersonalInfo)}
         ></PersonalInfoForm>
-        <ExperienceForm
+        <DataForm
+          title="Experience"
+          wrapId="experience-form"
+          isVisible={expInput}
           formData={currentExp}
-          expInput={expInput}
           onChange={(event) => handleFormChange(event, setCurrentExp)}
+          fields={experienceFields}
         >
-          {experienceList.length > 0 && (
-            <div className={`exp-entries ${expInput ? "hidden" : ""}`}>
-              {experienceList.map((entry) => (
-                <SavedEntry
-                  key={entry.id}
-                  entry={entry}
-                  onEdit={handleEntryEdit}
-                  onDelete={handleEntryDelete}
-                ></SavedEntry>
-              ))}
-            </div>
-          )}
-          <AddButton
-            name="Add experience"
-            onClick={() => handleAddClick("exp")}
-            input={expInput}
-          ></AddButton>
-          <div className={`btn-wrap ${!expInput ? "hidden" : ""}`}>
-            <button className="cancel-btn" onClick={() => handleCancelClick("exp")}>
-              Cancel
-            </button>
-            <button className="save-btn" onClick={() => handleSaveClick("exp")}>
-              Save
-            </button>
-          </div>
-        </ExperienceForm>
+          <FormControls
+              section="experience"
+              onAdd={() => handleAddClick("exp")}
+              onSave={() => handleSaveClick("exp")}
+              onCancel={() => handleCancelClick("exp")}
+              isVisible={expInput}
+          />
+        </DataForm>
         <DataForm
           title="Education"
           wrapId="education-form"
@@ -233,13 +226,22 @@ function App() {
               isVisible={educInput}
           />
         </DataForm>
-        <SkillsForm>
-          <AddButton
-            name="Add skills"
-            onClick={() => handleAddClick("skills")}
-            input={skillsInput}
-          ></AddButton>
-        </SkillsForm>
+        <DataForm
+          title="Skills"
+          wrapId="skills-form"
+          isVisible={skillsInput}
+          formData={currentSkills}
+          onChange={(event) => handleFormChange(event, setCurrentSkills)}
+          fields={skillsFields}
+        >
+          <FormControls
+              section="skills"
+              onAdd={() => handleAddClick("skills")}
+              onSave={() => handleSaveClick("skills")}
+              onCancel={() => handleCancelClick("skills")}
+              isVisible={skillsInput}
+          />
+        </DataForm>
       </div>
       <PrintPreview
         personalInfo={personalInfo}

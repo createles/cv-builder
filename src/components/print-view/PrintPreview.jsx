@@ -79,7 +79,7 @@ function PrintPreview({personalInfo, experienceList, currentExp, educList, curre
             subtitle={entry.subdiscipline}
             dates={null}
             location={null}
-            descriptionList={(entry.specs || '').split("\n").filter(Boolean)}
+            descriptionList={(entry.description || '').split("\n").filter(Boolean)}
             />
           ))}
         </div>
