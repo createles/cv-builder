@@ -1,16 +1,11 @@
 import { useState, useMemo } from 'react'
 import './App.css'
-import InputWrapper from './components/input-forms/InputWrapper'
+import { useLocalStorage } from './hooks/useLocalStorage'
 import PrintPreview from './components/print-view/PrintPreview'
 import DataForm from './components/input-forms/DataForm'
+import SavedEntry from './components/input-forms/SavedEntry'
 import FormControls from './components/input-forms/FormControls'
 import PersonalInfoForm from './components/input-forms/PersonalInfoForm'
-import ExperienceForm from './components/input-forms/ExperienceForm'
-import EducationForm from './components/input-forms/EducationForm'
-import SkillsForm from './components/input-forms/SkillForm'
-import AddButton from './components/input-forms/AddButton'
-import SavedEntry from './components/input-forms/SavedEntry'
-
 
 
 // Configurations for each form per section
@@ -38,7 +33,7 @@ const skillsFields = [
 ]
 
 function App() {
-  const [personalInfo, setPersonalInfo] = useState({
+  const [personalInfo, setPersonalInfo] = useLocalStorage("personaInfo", {
     fullName: "",
     title: "",
     email: "",
@@ -48,17 +43,17 @@ function App() {
   });
 
   // master list for experiences
-  const [experienceList, setExperienceList] = useState([]);
+  const [experienceList, setExperienceList] = useLocalStorage("experienceList", []);
   const [currentExp, setCurrentExp] = useState(null);  // temporary draft experience data
   const [expInput, setExpInput] = useState(false);   // state for opening experience form
 
     /* master list for education entries */
-  const [educList, setEducList] = useState([]);
+  const [educList, setEducList] = useLocalStorage("educList", []);
   const [currentEduc, setCurrentEduc] = useState(null);   /* temporary draft educ data */
   const [educInput, setEducInput] = useState(false);   /* state for opening education form */
 
   /* master list for education entries */
-  const [skillsList, setSkillsList] = useState([]);
+  const [skillsList, setSkillsList] = useLocalStorage("skillsList", []);
   const [currentSkills, setCurrentSkills] = useState(null);   /* temporary draft skills data */
   const [skillsInput, setSkillsInput] = useState(false);   /* state for opening skills form */
 
@@ -169,20 +164,16 @@ function App() {
     }));
   };
 
-
-  const handleEntryEdit = (idToEdit) => {
-    const entryToEdit = experienceList.find((entry) => entry.id === idToEdit);
-
-    console.log(entryToEdit);
-
+  const handleEntryEdit = (idToEdit, list, setCurrentItem, setInput) => {
+    const entryToEdit = list.find((entry) => entry.id === idToEdit);
     if (entryToEdit) {
-      setCurrentExp(entryToEdit);
-      setExpInput(!expInput);
+      setCurrentItem(entryToEdit);
+      setInput((prevInput) => !prevInput);
     }
   };
 
-  const handleEntryDelete = (idToDelete) => {
-    setExperienceList((prevList) =>
+  const handleEntryDelete = (idToDelete, setList) => {
+    setList((prevList) =>
       prevList.filter((entry) => entry.id !== idToDelete)
     );
   };
@@ -202,6 +193,14 @@ function App() {
           onChange={(event) => handleFormChange(event, setCurrentExp)}
           fields={experienceFields}
         >
+          {experienceList.length > 0 ? experienceList.map(entry => (
+            <SavedEntry
+              key={entry.id}
+              entry={entry}
+              onEdit={() => handleEntryEdit(entry.id, experienceList, setCurrentExp, setExpInput)}
+              onDelete={() => handleEntryDelete(entry.id, setExperienceList)} // FIGURE OUT: title is not in og data
+            />
+          )) : null }
           <FormControls
               section="experience"
               onAdd={() => handleAddClick("exp")}
