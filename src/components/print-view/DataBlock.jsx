@@ -1,4 +1,4 @@
-function ExperienceBlock({experienceEntry}) {
+function DataBlock({experienceEntry}) {
   const descList = (experienceEntry.description || "").split("\n").filter(Boolean);
 
 
@@ -17,4 +17,4 @@ function ExperienceBlock({experienceEntry}) {
   )
 }
 
-export default ExperienceBlock;
+export default DataBlock;

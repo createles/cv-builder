@@ -1,6 +1,6 @@
 import "../../styles/print-preview.css"
 import Header from "./Header";
-import ExperienceBlock from "./ExperienceBlock";
+import DataBlock from "./DataBlock";
 
 function PrintPreview({fullName, title, email, contactNumber, location, link, experienceList, currentExp, educList, currentEduc, skillsList, currentSkills}) {
   let displayList = currentExp
@@ -19,7 +19,7 @@ function PrintPreview({fullName, title, email, contactNumber, location, link, ex
       <div className="experience-section">
         <h2>Experience</h2>
         {displayList.length > 0 ? displayList.map(experienceEntry => (
-          <ExperienceBlock 
+          <DataBlock 
             key={experienceEntry.id}
             experienceEntry={experienceEntry}/>
         ))
