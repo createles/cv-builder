@@ -1,13 +1,39 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import './App.css'
 import InputWrapper from './components/input-forms/InputWrapper'
 import PrintPreview from './components/print-view/PrintPreview'
+import DataForm from './components/input-forms/DataForm'
+import FormControls from './components/input-forms/FormControls'
 import PersonalInfoForm from './components/input-forms/PersonalInfoForm'
 import ExperienceForm from './components/input-forms/ExperienceForm'
 import EducationForm from './components/input-forms/EducationForm'
 import SkillsForm from './components/input-forms/SkillForm'
 import AddButton from './components/input-forms/AddButton'
 import SavedEntry from './components/input-forms/SavedEntry'
+
+
+
+// Configurations for each form per section
+const experienceFields = [
+  { label: "Company / Organization / Project", type: "text", name: "companyName"},
+  { label: "Position", type: "text", name: "position" },
+  { label: "Start Date", type: "month", name: "startDate" },
+  { label: "End Date", type: "month", name: "endDate" },
+  { label: "Location", type: "text", name: "companyLocation" },
+  { label: "Description", type: "textarea", name: "description" },
+];
+
+const educationFields = [
+  { label: "Institution / School Name", type: "text", name: "institution" },
+  { label: "Major / Field of Study", type: "text", name: "field" },
+  { label: "Start Date", type: "month", name: "startDate" },
+  { label: "End Date", type: "month", name: "endDate" },
+  { label: "Relevant Coursework", type: "textarea", name: "courseWork" },
+];
+
+const skillsFields = [
+  { label: ""}
+]
 
 function App() {
   const [personalInfo, setPersonalInfo] = useState({
@@ -34,7 +60,7 @@ function App() {
   const [currentSkills, setCurrentSkills] = useState(null);   /* temporary draft educ data */
   const [skillsInput, setSkillsInput] = useState(false);   /* state for opening education form */
 
-  const formConfig = {
+  const formConfig = useMemo(() => ({
     pInfo: {
       list: personalInfo,
       setList: setPersonalInfo,
@@ -77,7 +103,14 @@ function App() {
       setCurrentItem: setCurrentSkills,
       setInput: setSkillsInput,
     },
-  };
+  }), [
+    // dependency array
+    personalInfo, setPersonalInfo,
+    experienceList, setExperienceList, currentExp, setCurrentExp, setExpInput,
+    educList, setEducList, currentEduc, setCurrentEduc, setEducInput,
+    skillsList, setSkillsList, currentSkills, setCurrentSkills, setSkillsInput
+    ]
+  );
 
   // click handler for opening form
   const handleAddClick = (formCategory) => {
@@ -184,25 +217,22 @@ function App() {
             </button>
           </div>
         </ExperienceForm>
-        <EducationForm
+        <DataForm
+          title="Education"
+          wrapId="education-form"
+          isVisible={educInput}
           formData={currentEduc}
-          educInput={educInput}
           onChange={(event) => handleFormChange(event, setCurrentEduc)}
+          fields={educationFields}
         >
-          <AddButton
-            name="Add education"
-            onClick={() => handleAddClick("educ")}
-            input={educInput}
-          ></AddButton>
-          <div className={`btn-wrap ${!educInput ? "hidden" : ""}`}>
-            <button className="cancel-btn" onClick={() => handleCancelClick("educ")}>
-              Cancel
-            </button>
-            <button className="save-btn" onClick={() => handleSaveClick("educ")}>
-              Save
-            </button>
-          </div>
-        </EducationForm>
+          <FormControls
+              section="education"
+              onAdd={() => handleAddClick("educ")}
+              onSave={() => handleSaveClick("educ")}
+              onCancel={() => handleCancelClick("educ")}
+              isVisible={educInput}
+          />
+        </DataForm>
         <SkillsForm>
           <AddButton
             name="Add skills"
