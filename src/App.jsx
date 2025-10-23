@@ -57,6 +57,11 @@ function App() {
   const [currentSkills, setCurrentSkills] = useState(null);   /* temporary draft skills data */
   const [skillsInput, setSkillsInput] = useState(false);   /* state for opening skills form */
 
+  const handleClearResume = () => {
+    localStorage.clear();
+    window.location.reload();
+  }
+
   const formConfig = useMemo(() => ({
     pInfo: {
       list: personalInfo,
@@ -128,7 +133,7 @@ function App() {
     const { setInput, setCurrentItem } =
       formConfig[formCategory];
 
-    setInput((prevInput) => !prevInput)
+    setInput(false)
     setCurrentItem(null);
   };
 
@@ -141,6 +146,11 @@ function App() {
   const handleSaveClick = (formCategory) => {
     const { list, setList, currentItem, setCurrentItem, setInput } =
       formConfig[formCategory];
+
+    // if (!currentItem) {
+    //   console.error("Save clicked, but no data available to save.")
+    //   return;
+    // }
 
     const editExisting = list.some(
       (entry) => entry.id === currentItem.id
@@ -191,6 +201,7 @@ function App() {
   return (
     <div className="app-body">
       <div className="input-forms">
+        <button className="clear-btn" onClick={handleClearResume}>clear resume</button>
         <PersonalInfoForm
           personalInfo={personalInfo}
           onChange={(event) => handleFormChange(event, setPersonalInfo)}

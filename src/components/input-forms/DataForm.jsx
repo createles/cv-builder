@@ -14,7 +14,7 @@ function DataForm({
   return (
     <form className="data-form" onSubmit={onSubmit}>
       <InputWrapper title={title} wrapId={wrapId}>
-        {isVisible && (
+        {isVisible && formData && (
           <>
             {fields.map((field) => (
               <InputItem
