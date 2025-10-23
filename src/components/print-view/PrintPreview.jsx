@@ -72,16 +72,19 @@ function PrintPreview({personalInfo, experienceList, currentExp, educList, curre
       {skillsDisplayList.length > 0 && (
         <div className="skills-section">
           <h2>SKILLS</h2>
-          {skillsDisplayList.map(entry => (
-            <DataBlock
-            key={entry.id}
-            title={entry.discipline}
-            subtitle={entry.subdiscipline}
-            dates={null}
-            location={null}
-            descriptionList={(entry.description || '').split("\n").filter(Boolean)}
-            />
-          ))}
+
+          <div className="skills-grid">
+            {skillsDisplayList.map(entry => (
+              <DataBlock
+              key={entry.id}
+              title={entry.discipline}
+              subtitle={entry.subdiscipline}
+              dates={null}
+              location={null}
+              descriptionList={(entry.description || '').split("\n").filter(Boolean)}
+              />
+            ))}
+          </div>
         </div>
       )}
     </div>

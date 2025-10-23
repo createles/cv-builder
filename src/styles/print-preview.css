@@ -1,25 +1,171 @@
 .print-preview {
-  background-color: #fff;
-  width: 80%;
-  height: 80%;  
-  place-self: center;
-  aspect-ratio: 1 / 1.414;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  padding: 1rem;
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 210 / 297; 
+  background-color: #ffffff; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+  margin: 3rem auto; 
+  overflow: auto; 
+  display: flex; 
+  flex-direction: column;
+  padding: 2.5rem 3rem; 
+  color: #333; 
+  font-family: 'Inter', sans-serif; 
+  line-height: 1.6;
+}
+
+.print-preview h2 {
+  font-size: 1.3rem;
+  font-weight: 600; 
+  color: #2c3e50;
+  border-bottom: 1px solid #e0e0e0; 
+  padding-bottom: 0.5rem;
+  margin-top: 1.5rem; 
+  margin-bottom: 1rem; 
+}
+
+.print-preview p {
+  margin-bottom: 0.5rem; 
+  font-size: 0.95rem;
+}
+
+.header {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: flex-start; 
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #34495e; 
+  margin-bottom: 2rem;
+}
+
+.name-job {
+  flex: 1; 
 }
 
 .fullName {
-  font-size: 2rem;
+  font-size: 2.5rem; 
+  font-weight: 700; 
+  color: #2c3e50;
+  margin: 0; 
+  line-height: 1.2;
+}
+
+.job-title {
+  font-size: 1.1rem;
+  font-weight: 400; 
+  color: #555;
+  margin: 0.25rem 0 0 0; 
 }
 
 .contact-info {
   display: flex;
   flex-direction: column;
-  max-width: 100%;
+  align-items: flex-end; 
+  font-size: 0.9rem; 
+  color: #555;
+  white-space: nowrap; 
 }
 
-.experience-section {
-  grid-column-start: 1;
-  grid-column-end: 3;
+.contact-info p {
+  margin: 0.1rem 0; 
+  display: flex; 
+  align-items: center;
+}
+
+/* Style for react-icons */
+.contact-info p svg { 
+  margin-right: 0.5rem;
+  color: #3498db; 
+  flex-shrink: 0; 
+}
+
+.experience-section,
+.education-section,
+.skills-section {
+  margin-bottom: 1.5rem; 
+}
+
+.skills-section {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.skills-section h2 {
+  border: none;
+  place-self: center;
+}
+
+.skills-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(6rem, 1fr);
+  gap: 1.5rem;
+}
+
+.skills-grid .data-block {
+  margin-bottom: 0;
+}
+
+.skills-grid .data-block .data-title { 
+  font-weight: 600; 
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.skills-grid .data-block .data-subtitle { 
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.skills-grid .data-block ul {
+  list-style-type: disc;
+  margin-left: 1.2rem;
+  padding-left: 0;
+  margin-top: 0.3rem;
+}
+
+.skills-grid .data-block ul li {
+  margin-bottom: 0.2rem;
+  font-size: 0.8rem; 
+}
+
+.data-block { 
+  margin-bottom: 1.2rem; 
+}
+
+.data-block .data-title { 
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.1rem;
+}
+
+.data-block .data-subtitle { 
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.1rem;
+}
+
+.data-block .data-dates,
+.data-block .data-location {
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 0.3rem;
+}
+
+.data-block ul {
+  list-style-type: disc; 
+  margin-left: 1.5rem; 
+  padding-left: 0;
+  margin-top: 0.5rem;
+}
+
+.data-block ul li {
+  margin-bottom: 0.3rem;
+  line-height: 1.5;
 }
