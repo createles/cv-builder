@@ -9,26 +9,30 @@ function DataForm({
   onChange,
   children,
   fields = [],
+  onSubmit,
 }) {
   return (
-    <InputWrapper title={title} wrapId={wrapId}>
-      {isVisible && (
-        <>
-          {fields.map((field) => (
-            <InputItem
-              key={field.name}
-              label={field.label}
-              type={field.type}
-              name={field.name}
-              onChange={onChange}
-              value={formData[field.name]}
+    <form className="data-form" onSubmit={onSubmit}>
+      <InputWrapper title={title} wrapId={wrapId}>
+        {isVisible && (
+          <>
+            {fields.map((field) => (
+              <InputItem
+                key={field.name}
+                label={field.label}
+                type={field.type}
+                name={field.name}
+                onChange={onChange}
+                value={formData[field.name]}
+                required={field.required}
               />
-          ))}
-        </>
-      )}
-      {children}
-    </InputWrapper>
-  )
-};
+            ))}
+          </>
+        )}
+        {children}
+      </InputWrapper>
+    </form>
+  );
+}
 
 export default DataForm;

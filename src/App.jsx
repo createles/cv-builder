@@ -10,8 +10,8 @@ import PersonalInfoForm from './components/input-forms/PersonalInfoForm'
 
 // Configurations for each form per section
 const experienceFields = [
-  { label: "Company / Organization / Project", type: "text", name: "companyName"},
-  { label: "Position", type: "text", name: "position" },
+  { label: "Company / Organization / Project", type: "text", name: "companyName", required: true },
+  { label: "Position", type: "text", name: "position", required: true  },
   { label: "Start Date", type: "month", name: "startDate" },
   { label: "End Date", type: "month", name: "endDate" },
   { label: "Location", type: "text", name: "companyLocation" },
@@ -19,21 +19,21 @@ const experienceFields = [
 ];
 
 const educationFields = [
-  { label: "Institution / School Name", type: "text", name: "institution" },
-  { label: "Major / Field of Study", type: "text", name: "field" },
+  { label: "Institution / School Name", type: "text", name: "institution", required: true  },
+  { label: "Major / Field of Study", type: "text", name: "field", required: true  },
   { label: "Start Date", type: "month", name: "startDate" },
   { label: "End Date", type: "month", name: "endDate" },
   { label: "Relevant Coursework", type: "textarea", name: "courseWork" },
 ];
 
 const skillsFields = [
-  { label: "Discipline", type: "text", name: "discipline"},
+  { label: "Discipline", type: "text", name: "discipline", required: true },
   { label: "Subdiscipline", type: "text", name: "subdiscipline"},
   { label: "Description", type: "textarea", name: "description"},
 ]
 
 function App() {
-  const [personalInfo, setPersonalInfo] = useLocalStorage("personaInfo", {
+  const [personalInfo, setPersonalInfo] = useLocalStorage("personalInfo", {
     fullName: "",
     title: "",
     email: "",
@@ -132,12 +132,18 @@ function App() {
     setCurrentItem(null);
   };
 
+  const handleFormSubmit= (event, formCategory) => {
+    event.preventDefault();
+
+    handleSaveClick(formCategory);
+  };
+
   const handleSaveClick = (formCategory) => {
     const { list, setList, currentItem, setCurrentItem, setInput } =
       formConfig[formCategory];
 
     const editExisting = list.some(
-      (entry) => entry.id === currentExp.id
+      (entry) => entry.id === currentItem.id
     );
 
     if (editExisting) {
@@ -164,7 +170,9 @@ function App() {
     }));
   };
 
-  const handleEntryEdit = (idToEdit, list, setCurrentItem, setInput) => {
+  const handleEntryEdit = (idToEdit, formCategory) => {
+    const { list, setCurrentItem, setInput } = formConfig[formCategory];
+
     const entryToEdit = list.find((entry) => entry.id === idToEdit);
     if (entryToEdit) {
       setCurrentItem(entryToEdit);
@@ -172,7 +180,9 @@ function App() {
     }
   };
 
-  const handleEntryDelete = (idToDelete, setList) => {
+  const handleEntryDelete = (idToDelete, formCategory) => {
+    const { setList } = formConfig[formCategory];
+
     setList((prevList) =>
       prevList.filter((entry) => entry.id !== idToDelete)
     );
@@ -192,19 +202,20 @@ function App() {
           formData={currentExp}
           onChange={(event) => handleFormChange(event, setCurrentExp)}
           fields={experienceFields}
+          onSubmit={(event) => handleFormSubmit(event, "exp")}
         >
-          {experienceList.length > 0 ? experienceList.map(entry => (
+          {experienceList.length > 0 && !expInput ? experienceList.map(entry => (
             <SavedEntry
               key={entry.id}
               entry={entry}
-              onEdit={() => handleEntryEdit(entry.id, experienceList, setCurrentExp, setExpInput)}
-              onDelete={() => handleEntryDelete(entry.id, setExperienceList)} // FIGURE OUT: title is not in og data
+              entryTitle={entry.companyName}
+              onEdit={() => handleEntryEdit(entry.id, "exp")}
+              onDelete={() => handleEntryDelete(entry.id, "exp")}
             />
           )) : null }
           <FormControls
               section="experience"
               onAdd={() => handleAddClick("exp")}
-              onSave={() => handleSaveClick("exp")}
               onCancel={() => handleCancelClick("exp")}
               isVisible={expInput}
           />
@@ -216,11 +227,20 @@ function App() {
           formData={currentEduc}
           onChange={(event) => handleFormChange(event, setCurrentEduc)}
           fields={educationFields}
+          onSubmit={(event) => handleFormSubmit(event, "educ")}
         >
+          {educList.length > 0 && !educInput ? educList.map(entry => (          
+            <SavedEntry
+              key={entry.id}
+              entry={entry}
+              entryTitle={entry.institution}
+              onEdit={() => handleEntryEdit(entry.id, "educ")}
+              onDelete={() => handleEntryDelete(entry.id, "educ")}
+          />
+          )) : null }
           <FormControls
               section="education"
               onAdd={() => handleAddClick("educ")}
-              onSave={() => handleSaveClick("educ")}
               onCancel={() => handleCancelClick("educ")}
               isVisible={educInput}
           />
@@ -232,11 +252,20 @@ function App() {
           formData={currentSkills}
           onChange={(event) => handleFormChange(event, setCurrentSkills)}
           fields={skillsFields}
+          onSubmit={(event) => handleFormSubmit(event, "skills")}
         >
+          {skillsList.length > 0 && !skillsInput ? skillsList.map(entry => (          
+            <SavedEntry
+              key={entry.id}
+              entry={entry}
+              entryTitle={entry.discipline}
+              onEdit={() => handleEntryEdit(entry.id, "skills")}
+              onDelete={() => handleEntryDelete(entry.id, "skills")}
+          />
+          )) : null }
           <FormControls
               section="skills"
               onAdd={() => handleAddClick("skills")}
-              onSave={() => handleSaveClick("skills")}
               onCancel={() => handleCancelClick("skills")}
               isVisible={skillsInput}
           />
