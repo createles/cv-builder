@@ -13,6 +13,26 @@ body {
   background-color: var(--dark-bg);
 }
 
-.contact-info {
+@media print {
+  body * {
+    visibility: hidden;
+  }
 
+  .print-preview, .print-preview * {
+    visibility: visible;
+  }
+
+  .app-body .print-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: none;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    overflow: visible;
+    aspect-ratio: auto;
+  }
 }

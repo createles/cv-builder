@@ -6,6 +6,7 @@ import DataForm from './components/input-forms/DataForm'
 import SavedEntry from './components/input-forms/SavedEntry'
 import FormControls from './components/input-forms/FormControls'
 import PersonalInfoForm from './components/input-forms/PersonalInfoForm'
+import { samplePersonalInfo, sampleExperienceList, sampleEducList, sampleSkillsList } from './sample-data'
 
 
 // Configurations for each form per section
@@ -61,6 +62,26 @@ function App() {
     localStorage.clear();
     window.location.reload();
   }
+
+  const handleLoadSample = () => {
+    // load resume sample data
+    setPersonalInfo(samplePersonalInfo);
+    setExperienceList(sampleExperienceList);
+    setEducList(sampleEducList);
+    setSkillsList(sampleSkillsList);
+
+    // close all form inputs
+    setCurrentExp(null);
+    setExpInput(false);
+    setCurrentEduc(null);
+    setEducInput(false);
+    setCurrentSkills(null);
+    setSkillsInput(false);
+  }
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   const formConfig = useMemo(() => ({
     pInfo: {
@@ -202,6 +223,8 @@ function App() {
     <div className="app-body">
       <div className="input-forms">
         <button className="clear-btn" onClick={handleClearResume}>clear resume</button>
+        <button className="load-sample-btn" onClick={handleLoadSample}>load sample</button>
+        <button className="print-btn" onClick={handlePrint}>print</button>
         <PersonalInfoForm
           personalInfo={personalInfo}
           onChange={(event) => handleFormChange(event, setPersonalInfo)}

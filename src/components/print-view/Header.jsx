@@ -2,7 +2,7 @@ import { MdEmail, MdPhone, MdLocationOn, MdLink } from "react-icons/md";
 
 function Header({ fullName, title, email, contactNumber, location, link }) {
   return (
-    <>
+    <div className="header">
       <div className="name-job">
         <p className="fullName">{fullName}</p>
         <p className="job-title">{title}</p>
@@ -25,7 +25,7 @@ function Header({ fullName, title, email, contactNumber, location, link }) {
           {link}
         </p>
       </div>
-    </>
+    </div>
   );
 }
 

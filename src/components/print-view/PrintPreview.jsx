@@ -38,7 +38,7 @@ function PrintPreview({personalInfo, experienceList, currentExp, educList, curre
       {/* {Experience Preview} */}
       {expDisplayList.length > 0 && (
         <div className="experience-section">
-          <h2>Experience</h2>
+          <h2>EXPERIENCE</h2>
           {expDisplayList.map(entry => (
             <DataBlock 
               key={entry.id}
@@ -55,7 +55,7 @@ function PrintPreview({personalInfo, experienceList, currentExp, educList, curre
       {/* {Education Preview} */}
       {educDisplayList.length > 0 && (
         <div className="education-section">
-          <h2>Education</h2>
+          <h2>EDUCATION</h2>
           {educDisplayList.map(entry => (
             <DataBlock
             key={entry.id}
@@ -71,7 +71,7 @@ function PrintPreview({personalInfo, experienceList, currentExp, educList, curre
 
       {skillsDisplayList.length > 0 && (
         <div className="skills-section">
-          <h2>Skills</h2>
+          <h2>SKILLS</h2>
           {skillsDisplayList.map(entry => (
             <DataBlock
             key={entry.id}
