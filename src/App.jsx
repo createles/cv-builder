@@ -24,6 +24,7 @@ const educationFields = [
   { label: "Major / Field of Study", type: "text", name: "field", required: true  },
   { label: "Start Date", type: "month", name: "startDate" },
   { label: "End Date", type: "month", name: "endDate" },
+  { label: "Location", type: "text", name: "educLocation"},
   { label: "Relevant Coursework", type: "textarea", name: "courseWork" },
 ];
 
@@ -116,6 +117,7 @@ function App() {
         field: "",
         startDate: "",
         endDate: "",
+        location: "",
         courseWork: "",
       })
     },

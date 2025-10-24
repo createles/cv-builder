@@ -62,7 +62,7 @@ function PrintPreview({personalInfo, experienceList, currentExp, educList, curre
             title={entry.institution}
             subtitle={entry.field}
             dates={formatDates(entry)}
-            location={null}
+            location={entry.educLocation}
             descriptionList={(entry.courseWork || '').split("\n").filter(Boolean)}
             />
         ))}
@@ -73,7 +73,7 @@ function PrintPreview({personalInfo, experienceList, currentExp, educList, curre
         <div className="skills-section">
           <h2>SKILLS</h2>
 
-          <div className="skills-grid">
+          <div className="skills-flex">
             {skillsDisplayList.map(entry => (
               <DataBlock
               key={entry.id}
