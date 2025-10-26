@@ -7,7 +7,7 @@ import SavedEntry from './components/input-forms/SavedEntry'
 import FormControls from './components/input-forms/FormControls'
 import PersonalInfoForm from './components/input-forms/PersonalInfoForm'
 import { samplePersonalInfo, sampleExperienceList, sampleEducList, sampleSkillsList } from './sample-data'
-import { FaPrint } from "react-icons/fa";
+import { FaPrint, FaGithub } from "react-icons/fa";
 
 
 // Configurations for each form per section
@@ -225,6 +225,7 @@ function App() {
   return (
     <div className="app-body">
       <div className="input-forms">
+        <button className='github-btn' onClick={window.open('https://github.com/createles/cv-builder', '_blank')}><FaGithub/>github</button>
         <div className="form-options">
           <div className="option-btns">
             <button className="clear-btn" onClick={handleClearResume}>clear resume</button>
