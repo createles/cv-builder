@@ -1,11 +1,12 @@
 .print-preview {
   width: 100%;
   max-width: 800px;
+  position: sticky;
+  top: 3rem;
   aspect-ratio: 210 / 297; 
   background-color: #ffffff; 
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
-  margin: 3rem auto; 
-  overflow: auto; 
+  margin: 3rem auto;
   display: flex; 
   flex-direction: column;
   padding: 2.5rem 3rem; 

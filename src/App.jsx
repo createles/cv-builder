@@ -7,6 +7,7 @@ import SavedEntry from './components/input-forms/SavedEntry'
 import FormControls from './components/input-forms/FormControls'
 import PersonalInfoForm from './components/input-forms/PersonalInfoForm'
 import { samplePersonalInfo, sampleExperienceList, sampleEducList, sampleSkillsList } from './sample-data'
+import { FaPrint } from "react-icons/fa";
 
 
 // Configurations for each form per section
@@ -224,9 +225,12 @@ function App() {
   return (
     <div className="app-body">
       <div className="input-forms">
-        <button className="clear-btn" onClick={handleClearResume}>clear resume</button>
-        <button className="load-sample-btn" onClick={handleLoadSample}>load sample</button>
-        <button className="print-btn" onClick={handlePrint}>print</button>
+        <div className="form-options">
+          <div className="option-btns">
+            <button className="clear-btn" onClick={handleClearResume}>clear resume</button>
+            <button className="load-sample-btn" onClick={handleLoadSample}>load sample</button>
+          </div>
+        </div>
         <PersonalInfoForm
           personalInfo={personalInfo}
           onChange={(event) => handleFormChange(event, setPersonalInfo)}
@@ -315,7 +319,9 @@ function App() {
         currentEduc={currentEduc}
         skillsList={skillsList}
         currentSkills={currentSkills}
-      ></PrintPreview>
+      >
+      </PrintPreview>
+      <button className="print-btn" onClick={handlePrint}><FaPrint/></button>
     </div>
   );
 }

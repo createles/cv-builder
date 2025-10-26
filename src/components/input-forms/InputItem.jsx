@@ -31,7 +31,9 @@ function InputItem({label, type, name, value, onChange, required}) {
         <div className="input-item">
             <label className="item-label" htmlFor={name+"-input"} > {label} </label>
             {type === "textarea" ?
-            <textarea id={name+"-input"} name={name} value={value} onChange={onChange} required={required} onKeyDown={handleKeyDown}></textarea> :
+            <div className="text-area-box"> <textarea id={name+"-input"} name={name} value={value} onChange={onChange} required={required} onKeyDown={handleKeyDown}></textarea>
+            <p> (pressing enter creates new entry) </p>
+            </div> :
             <input type={type} name={name} id={name+"-input"} value={value} onChange={onChange} required={required} onKeyDown={handleKeyDown}/>}
         </div>
     )
