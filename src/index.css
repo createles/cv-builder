@@ -34,6 +34,7 @@ body {
   }
 
   .app-body .print-preview {
+    display: flex !important;
     position: static;
     max-width: none;
     width: 100%;
@@ -44,4 +45,42 @@ body {
     overflow: visible;
     aspect-ratio: auto;
   }
+}
+
+@media (max-width: 768px) {
+  .app-body {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  .input-forms {
+    width: 100%;
+    order: 1;
+    overflow-y: visible;
+  }
+
+  .mobile-view-container.visible-mobile {
+    display: block;
+  }
+
+  .print-preview {
+    display: none !important;
+  }
+
+  .print-btn {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 4%;
+    right: 5% !important;
+    font-size: 1.7rem !important;
+    color: white;
+    border: none;
+    border-radius: 30%;
+    padding: 0.5rem;
+    width: 3rem !important;
+    height: 3rem !important;
+    background-color: #3498db;
+  } 
 }

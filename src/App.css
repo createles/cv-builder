@@ -197,3 +197,14 @@ button:active {
   background-color: #38a169;
   transform: none;
 }
+
+.instructions {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem;
+}
+
+.instructions-text {
+  font-style: italic;
+  text-align: center;
+}

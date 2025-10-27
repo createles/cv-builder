@@ -232,6 +232,9 @@ function App() {
             <button className="load-sample-btn" onClick={handleLoadSample}>load sample</button>
           </div>
         </div>
+        <div className="instructions">
+          <p className="instructions-text"> Fill the following input fields, and click the print button to preview and save your document. </p>
+        </div>
         <PersonalInfoForm
           personalInfo={personalInfo}
           onChange={(event) => handleFormChange(event, setPersonalInfo)}
