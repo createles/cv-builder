@@ -225,7 +225,7 @@ function App() {
   return (
     <div className="app-body">
       <div className="input-forms">
-        <button className='github-btn' onClick={window.open('https://github.com/createles/cv-builder', '_blank')}><FaGithub/>github</button>
+        <button className='github-btn' onClick={() => {window.open('https://github.com/createles/cv-builder', '_blank')}}><FaGithub/>github</button>
         <div className="form-options">
           <div className="option-btns">
             <button className="clear-btn" onClick={handleClearResume}>clear resume</button>
